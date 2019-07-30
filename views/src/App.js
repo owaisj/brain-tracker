@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 function App() {
-  return <div>My App</div>;
+  return (
+    <Fragment>
+      {/* TODO: Refactor to a header component */}
+      <section className="hero is-info is-bold is-medium">
+        <div className="hero-body">
+          <div className="container">
+            <h1 className="title">Mental Health Tracker</h1>
+          </div>
+        </div>
+      </section>
+    </Fragment>
+  );
 }
 
 export default App;
