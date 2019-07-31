@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+
 module.exports = function(sequelize, DataTypes) {
   const User = sequelize.define(
     'User',
@@ -27,7 +29,18 @@ module.exports = function(sequelize, DataTypes) {
     },
     {
       freezeTableName: true,
-      tableName: 'User'
+      tableName: 'User',
+      hooks: {
+        // eslint-disable-next-line
+        beforeCreate: function(userInstance) {
+          // eslint-disable-next-line no-param-reassign
+          userInstance.password = bcrypt.hashSync(
+            userInstance.password,
+            bcrypt.genSaltSync(10),
+            null
+          );
+        }
+      }
     }
   );
 
@@ -37,6 +50,15 @@ module.exports = function(sequelize, DataTypes) {
     User.hasMany(models.Sleep);
     User.hasMany(models.Mood);
   };
+
+  User.prototype.validPassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+  };
+
+  // User.beforeCreate(function(user) {
+  //   // eslint-disable-next-line no-param-reassign
+  //   user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
+  // });
 
   return User;
 };
