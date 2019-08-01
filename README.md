@@ -11,3 +11,11 @@ Back-End: Node, Express, Postgres
 
 Enzyme for React front-end snapshot testing while following the Airbnb style guides (ESLint)  
 Jest for the front and back-end
+
+## Testing
+
+REST Testing with POSTMAN
+
+## Problems in Development
+
+Sequelize Hooks and Seeding, and Passport JS implementation
