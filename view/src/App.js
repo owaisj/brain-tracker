@@ -1,18 +1,15 @@
 import React, { Fragment } from 'react';
+import Header from './components/Header';
+import CustomFooter from './components/Footer';
+import Main from './pages/Main';
 
-function App() {
+export default function App() {
   return (
     <Fragment>
       {/* TODO: Refactor to a header component */}
-      <section className="hero is-info is-bold is-medium">
-        <div className="hero-body">
-          <div className="container">
-            <h1 className="title">Mental Health Tracker</h1>
-          </div>
-        </div>
-      </section>
+      <Header />
+      <Main />
+      <CustomFooter />
     </Fragment>
   );
 }
-
-export default App;

@@ -1,0 +1,12 @@
+@charset 'utf-8';
+@import '~../../../node_modules/bulma/bulma.sass';
+
+// Sticky footer
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.section {
+  flex-grow: 1;
+}
