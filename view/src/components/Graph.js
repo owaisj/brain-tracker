@@ -1,18 +1,9 @@
 import React from 'react';
 import { Tile, Notification, Title, Content } from 'rbx';
 import { VictoryLine, VictoryChart, VictoryAxis } from 'victory';
+import { connect } from 'react-redux';
 
-const testData = [
-  { day: 'Monday', mood: 3 },
-  { day: 'Tuesday', mood: 6 },
-  { day: 'Wednesday', mood: 7 },
-  { day: 'Thursday', mood: 4 },
-  { day: 'Friday', mood: 7 },
-  { day: 'Saturday', mood: 8 },
-  { day: 'Sunday', mood: 5 }
-];
-
-export default function Graph() {
+function Graph(props) {
   return (
     <Tile kind="parent">
       <Tile kind="child" as={Notification} color="info">
@@ -23,7 +14,7 @@ export default function Graph() {
               // X-Axis
               label="Day"
               tickValues={[1, 2, 3, 4, 5, 6, 7]}
-              tickFormat={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
+              tickFormat={props.data.map(value => value.day)}
               style={{
                 axis: {
                   stroke: '#ffffff'
@@ -49,7 +40,7 @@ export default function Graph() {
             />
             <VictoryLine
               interpolation="natural"
-              data={testData}
+              data={props.data.map(value => value.mood)}
               x="day"
               y="mood"
               style={{
@@ -65,3 +56,12 @@ export default function Graph() {
     </Tile>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    // data property on the props (props.data)
+    data: state.mood.testData
+  };
+};
+
+export default connect(mapStateToProps)(Graph);

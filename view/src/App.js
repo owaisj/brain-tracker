@@ -6,7 +6,6 @@ import Main from './pages/Main';
 export default function App() {
   return (
     <Fragment>
-      {/* TODO: Refactor to a header component */}
       <Header />
       <Main />
       <CustomFooter />
