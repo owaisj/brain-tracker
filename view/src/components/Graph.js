@@ -9,48 +9,55 @@ function Graph(props) {
       <Tile kind="child" as={Notification} color="info">
         <Title as="h2">Chart</Title>
         <Content>
-          <VictoryChart domainPadding={10}>
-            <VictoryAxis
-              // X-Axis
-              label="Day"
-              tickValues={[1, 2, 3, 4, 5, 6, 7]}
-              tickFormat={props.data.map(value => value.day)}
-              style={{
-                axis: {
-                  stroke: '#ffffff'
-                },
-                tickLabels: {
-                  fontSize: 10
-                }
-              }}
-            />
-            <VictoryAxis
-              // Y-Axis
-              dependentAxis
-              label="Mood"
-              tickFormat={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-              style={{
-                axis: {
-                  stroke: '#ffffff'
-                },
-                tickLabels: {
-                  fontSize: 10
-                }
-              }}
-            />
-            <VictoryLine
-              interpolation="natural"
-              data={props.data.map(value => value.mood)}
-              x="day"
-              y="mood"
-              style={{
-                data: {
-                  stroke: '#ffffff',
-                  strokeWidth: 2
-                }
-              }}
-            />
-          </VictoryChart>
+          {props.data.length ? (
+            <VictoryChart domainPadding={10}>
+              <VictoryAxis
+                // X-Axis
+                label="Day"
+                tickValues={props.data.map((value, index) => index)}
+                tickFormat={props.data.map(value => value.day)}
+                style={{
+                  axis: {
+                    stroke: '#ffffff'
+                  },
+                  tickLabels: {
+                    angle: 45,
+                    fontSize: 5,
+                    fill: 'white'
+                  }
+                }}
+              />
+              <VictoryAxis
+                // Y-Axis
+                dependentAxis
+                label="Mood"
+                tickFormat={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+                style={{
+                  axis: {
+                    stroke: '#ffffff'
+                  },
+                  tickLabels: {
+                    fontSize: 10,
+                    fill: 'white'
+                  }
+                }}
+              />
+              <VictoryLine
+                interpolation="natural"
+                data={props.data.map(value => value.mood)}
+                x="day"
+                y="mood"
+                style={{
+                  data: {
+                    stroke: '#ffffff',
+                    strokeWidth: 2
+                  }
+                }}
+              />
+            </VictoryChart>
+          ) : (
+            'Use the mood form to generate data'
+          )}
         </Content>
       </Tile>
     </Tile>
