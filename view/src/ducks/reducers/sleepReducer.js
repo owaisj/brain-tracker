@@ -3,15 +3,15 @@ const initialState = {
   testData: []
 };
 
-export default function moodReducer(state = initialState, action) {
+export default function sleepReducer(state = initialState, action) {
   switch (action.type) {
-    case 'ADD_MOOD_ENTRY':
+    case 'ADD_SLEEP_ENTRY':
       return {
         testData: [
           ...state.testData,
           {
             day: action.date,
-            mood: action.value
+            hours: action.value
           }
         ]
       };

@@ -7,7 +7,9 @@ function Graph(props) {
   return (
     <Tile kind="parent">
       <Tile kind="child" as={Notification} color="info">
-        <Title as="h2">Chart</Title>
+        <Title as="h2">
+          {props.visFilter === 'SHOW_MOOD' ? 'Mood' : 'Sleep'} Chart
+        </Title>
         <Content>
           {props.data.length ? (
             <VictoryChart domainPadding={10}>
@@ -15,13 +17,13 @@ function Graph(props) {
                 // X-Axis
                 label="Day"
                 tickValues={props.data.map((value, index) => index)}
-                tickFormat={props.data.map(value => value.day)}
+                tickFormat={props.data.map((value, index) => index)}
                 style={{
                   axis: {
                     stroke: '#ffffff'
                   },
                   tickLabels: {
-                    angle: 45,
+                    angle: 25,
                     fontSize: 5,
                     fill: 'white'
                   }
@@ -30,8 +32,12 @@ function Graph(props) {
               <VictoryAxis
                 // Y-Axis
                 dependentAxis
-                label="Mood"
-                tickFormat={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+                label={props.visFilter === 'SHOW_MOOD' ? 'Mood' : 'Sleep (hrs)'}
+                tickFormat={
+                  props.visFilter === 'SHOW_MOOD'
+                    ? Array.from(Array(11).keys())
+                    : Array.from(Array(13).keys())
+                }
                 style={{
                   axis: {
                     stroke: '#ffffff'
@@ -44,7 +50,11 @@ function Graph(props) {
               />
               <VictoryLine
                 interpolation="natural"
-                data={props.data.map(value => value.mood)}
+                data={
+                  props.visFilter === 'SHOW_MOOD'
+                    ? props.data.map(value => value.mood)
+                    : props.data.map(value => value.hours)
+                }
                 x="day"
                 y="mood"
                 style={{
@@ -56,7 +66,9 @@ function Graph(props) {
               />
             </VictoryChart>
           ) : (
-            'Use the mood form to generate data'
+            `Use the ${
+              props.visFilter === 'SHOW_MOOD' ? 'mood' : 'sleep'
+            } form to generate data`
           )}
         </Content>
       </Tile>
@@ -64,10 +76,17 @@ function Graph(props) {
   );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
+  if (state.visFilter === 'SHOW_MOOD') {
+    return {
+      data: state.mood.testData,
+      visFilter: state.visFilter
+    };
+  }
   return {
     // data property on the props (props.data)
-    data: state.mood.testData
+    data: state.sleep.testData,
+    visFilter: state.visFilter
   };
 };
 

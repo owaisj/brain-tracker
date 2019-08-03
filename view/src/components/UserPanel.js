@@ -3,22 +3,22 @@ import { connect } from 'react-redux';
 import { Tile, Title, Notification, Button, Column } from 'rbx';
 
 function UserPanel(props) {
-  console.log(props);
   return (
     <Tile kind="child" as={Notification} color="warning">
       <Title>Welcome {props.user}</Title>
       <Column.Group>
         <Column>
-          <Button onClick={() => props.userLogin()}>Login</Button>
-        </Column>
-        <Column>
-          <Button
-            onClick={() => {
-              props.userLogout();
-            }}
-          >
-            Logout
-          </Button>
+          {props.user !== 'Guest' ? (
+            <Button
+              onClick={() => {
+                props.userLogout();
+              }}
+            >
+              Logout
+            </Button>
+          ) : (
+            <Button onClick={() => props.userLogin()}>Login</Button>
+          )}
         </Column>
       </Column.Group>
     </Tile>
