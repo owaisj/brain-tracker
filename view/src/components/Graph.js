@@ -1,6 +1,12 @@
 import React from 'react';
 import { Tile, Notification, Title, Content } from 'rbx';
-import { VictoryLine, VictoryChart, VictoryAxis } from 'victory';
+import {
+  VictoryLine,
+  VictoryChart,
+  VictoryAxis,
+  VictoryTooltip,
+  VictoryVoronoiContainer
+} from 'victory';
 import { connect } from 'react-redux';
 
 function Graph(props) {
@@ -12,7 +18,10 @@ function Graph(props) {
         </Title>
         <Content>
           {props.data.length ? (
-            <VictoryChart domainPadding={10}>
+            <VictoryChart
+              domainPadding={10}
+              containerComponent={<VictoryVoronoiContainer />}
+            >
               <VictoryAxis
                 // X-Axis
                 label="Day"
@@ -23,8 +32,11 @@ function Graph(props) {
                     stroke: '#ffffff'
                   },
                   tickLabels: {
-                    angle: 25,
-                    fontSize: 5,
+                    angle: 5,
+                    fontSize: 7,
+                    fill: 'white'
+                  },
+                  axisLabel: {
                     fill: 'white'
                   }
                 }}
@@ -45,11 +57,29 @@ function Graph(props) {
                   tickLabels: {
                     fontSize: 10,
                     fill: 'white'
+                  },
+                  axisLabel: {
+                    fill: 'white'
                   }
                 }}
               />
               <VictoryLine
                 interpolation="natural"
+                labelComponent={<VictoryTooltip />}
+                labels={props.data.map(value => {
+                  const day = new Date(value.day);
+                  const week = [
+                    'Sun',
+                    'Mon',
+                    'Tue',
+                    'Wed',
+                    'Thu',
+                    'Fri',
+                    'Sat',
+                    'Sun'
+                  ];
+                  return `Entered on ${week[day.getDay()]}, ${value.day}`;
+                })}
                 data={
                   props.visFilter === 'SHOW_MOOD'
                     ? props.data.map(value => value.mood)
