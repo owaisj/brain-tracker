@@ -19,3 +19,8 @@ REST Testing with POSTMAN
 ## Problems in Development
 
 Sequelize Hooks and Seeding, and Passport JS implementation
+
+## Demo User
+
+Email: demouser@test.com  
+Password: password
