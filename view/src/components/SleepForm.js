@@ -26,7 +26,10 @@ function SleepForm(props) {
           </Button>
         </Column>
         <Column>
-          <Button onClick={() => props.setChartData('SHOW_SLEEP')}>
+          <Button
+            onClick={() => props.setChartData('SHOW_SLEEP')}
+            disabled={props.visFilter === 'SHOW_SLEEP'}
+          >
             View Sleep
           </Button>
         </Column>

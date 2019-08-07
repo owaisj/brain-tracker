@@ -26,7 +26,6 @@ router.post('/signup', function(req, res) {
     });
 });
 
-// Grab User Data
 router.get('/data', function(req, res) {
   if (!req.user) {
     res.json({});

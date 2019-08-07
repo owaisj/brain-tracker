@@ -28,7 +28,10 @@ function MoodForm(props) {
           </Button>
         </Column>
         <Column>
-          <Button onClick={() => props.setChartData('SHOW_MOOD')}>
+          <Button
+            onClick={() => props.setChartData('SHOW_MOOD')}
+            disabled={props.visFilter === 'SHOW_MOOD'}
+          >
             View Mood
           </Button>
         </Column>

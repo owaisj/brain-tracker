@@ -1,6 +1,43 @@
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
-import { Tile, Title, Notification, Button, Column } from 'rbx';
+import {
+  Tile,
+  Title,
+  Notification,
+  Button,
+  Column,
+  Field,
+  Control,
+  Input
+} from 'rbx';
+
+const LoginForm = props => {
+  const [value, setValue] = useState({});
+
+  const handleInputChange = e => {
+    setValue(e.target.value);
+  };
+
+  return (
+    <Fragment>
+      <Field>
+        <Control>
+          <Input
+            type="text"
+            placeholder="Your Name"
+            name="name"
+            onChange={handleInputChange}
+          />
+        </Control>
+      </Field>
+      <Field>
+        <Control>
+          <Button onClick={() => props.login(value)}>Login</Button>
+        </Control>
+      </Field>
+    </Fragment>
+  );
+};
 
 function UserPanel(props) {
   return (
@@ -17,7 +54,7 @@ function UserPanel(props) {
               Logout
             </Button>
           ) : (
-            <Button onClick={() => props.userLogin()}>Login</Button>
+            <LoginForm login={props.userLogin} />
           )}
         </Column>
       </Column.Group>
@@ -34,8 +71,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    userLogin: () => {
-      dispatch({ type: 'USER_LOGIN' });
+    userLogin: name => {
+      dispatch({ type: 'USER_LOGIN', name });
     },
     userLogout: () => {
       dispatch({ type: 'USER_LOGOUT' });

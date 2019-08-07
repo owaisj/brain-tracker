@@ -10,3 +10,10 @@
 .section {
   flex-grow: 1;
 }
+
+.title-link {
+  color: white;
+  &:hover {
+    color: grey;
+  }
+}
