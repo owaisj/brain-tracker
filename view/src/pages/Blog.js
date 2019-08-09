@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Section, Container, Tile, Notification, Title, Content } from 'rbx';
 import Moment from 'moment';
-import { Link } from 'react-router-dom';
+import Navigation from '../components/Navigation';
 
 export default function Main() {
   const [posts, setPosts] = useState([]);
@@ -51,29 +51,12 @@ export default function Main() {
     );
   };
 
-  const Sidebar = () => (
-    <Tile kind="parent" vertical>
-      <Tile kind="child" as={Notification} color="danger">
-        <Title>Navigation</Title>
-        <Tile vertical>
-          <Link to="/dashboard">View Dashboard</Link>
-        </Tile>
-        <Tile vertical>
-          <Link to="/">Sign-up</Link>
-        </Tile>
-        <Tile vertical>
-          <Title>Description</Title>
-        </Tile>
-      </Tile>
-    </Tile>
-  );
-
   // Blog Page
   return (
     <Section>
       <Container>
         <Tile kind="ancestor">
-          <Sidebar />
+          <Navigation />
           <PageContent />
         </Tile>
       </Container>

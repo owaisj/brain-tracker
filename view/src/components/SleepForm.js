@@ -16,7 +16,7 @@ function SleepForm(props) {
     // TODO: POST to User Table
     return (
       <Tile kind="child" as={Notification} color="primary">
-        <Title>Mood Form</Title>
+        <Title>Sleep Form</Title>
         User Specific Form
       </Tile>
     );
