@@ -15,6 +15,16 @@ const randomDate = (start = new Date(2019, 6, 1), end = new Date()) =>
 const randomValue = () => Math.floor(Math.random() * 10) + 1;
 
 function MoodForm(props) {
+  console.log(props);
+  if (props.user.name !== 'Guest')
+    // TODO: POST to User Table
+    return (
+      <Tile kind="child" as={Notification} color="primary">
+        <Title>Mood Form</Title>
+        User Specific Form
+      </Tile>
+    );
+
   return (
     <Tile kind="child" as={Notification} color="primary">
       <Title>Mood Form</Title>
@@ -47,7 +57,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  visFilter: state.visFilter
+  visFilter: state.visFilter,
+  user: state.auth
 });
 
 export default connect(

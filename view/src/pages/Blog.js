@@ -55,12 +55,15 @@ export default function Main() {
     <Tile kind="parent" vertical>
       <Tile kind="child" as={Notification} color="danger">
         <Title>Navigation</Title>
-        <Title subtitle>
+        <Tile vertical>
           <Link to="/dashboard">View Dashboard</Link>
-        </Title>
-      </Tile>
-      <Tile kind="child" as={Notification} color="danger">
-        <Title>Description</Title>
+        </Tile>
+        <Tile vertical>
+          <Link to="/">Sign-up</Link>
+        </Tile>
+        <Tile vertical>
+          <Title>Description</Title>
+        </Tile>
       </Tile>
     </Tile>
   );

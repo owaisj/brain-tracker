@@ -3,7 +3,7 @@ const db = require('../../models');
 const passport = require('../../config/passport');
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
-  res.send('User is logged in.');
+  res.json('AUTHENTICATED');
 });
 
 router.get('/logout', (req, res) => {
@@ -15,6 +15,8 @@ router.get('/logout', (req, res) => {
 router.post('/signup', function(req, res) {
   db.User.create({
     email: req.body.email,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     password: req.body.password,
     bio: req.body.bio
   })
@@ -33,6 +35,8 @@ router.get('/data', function(req, res) {
     // This is where we'll grab user data
     res.json({
       email: req.user.email,
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
       id: req.user.id,
       bio: req.user.bio
     });
