@@ -10,6 +10,19 @@ import {
 import { connect } from 'react-redux';
 
 function Graph(props) {
+  if (props.user.name !== 'Guest') {
+    // TODO: GET user data
+    return (
+      <Tile kind="parent">
+        <Tile kind="child" as={Notification} color="info">
+          <Title as="h2">
+            {props.visFilter === 'SHOW_MOOD' ? 'Mood' : 'Sleep'} Chart
+          </Title>
+          User Specific Graph
+        </Tile>
+      </Tile>
+    );
+  }
   return (
     <Tile kind="parent">
       <Tile kind="child" as={Notification} color="info">
@@ -110,13 +123,14 @@ const mapStateToProps = (state, ownProps) => {
   if (state.visFilter === 'SHOW_MOOD') {
     return {
       data: state.mood.testData,
-      visFilter: state.visFilter
+      visFilter: state.visFilter,
+      user: state.auth
     };
   }
   return {
-    // data property on the props (props.data)
     data: state.sleep.testData,
-    visFilter: state.visFilter
+    visFilter: state.visFilter,
+    user: state.auth
   };
 };
 

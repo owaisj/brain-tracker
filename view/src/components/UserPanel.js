@@ -10,12 +10,18 @@ import {
   Control,
   Input
 } from 'rbx';
+import { loginUser } from '../ducks/actions';
 
 const LoginForm = props => {
-  const [value, setValue] = useState({});
+  const [name, setName] = useState('');
+  const [pass, setPass] = useState('');
 
-  const handleInputChange = e => {
-    setValue(e.target.value);
+  const handleUserChange = e => {
+    setName(e.target.value);
+  };
+
+  const handlePassChange = e => {
+    setPass(e.target.value);
   };
 
   return (
@@ -24,15 +30,35 @@ const LoginForm = props => {
         <Control>
           <Input
             type="text"
-            placeholder="Your Name"
+            placeholder="Your Email Address"
             name="name"
-            onChange={handleInputChange}
+            value={name}
+            onChange={handleUserChange}
           />
         </Control>
       </Field>
       <Field>
         <Control>
-          <Button onClick={() => props.login(value)}>Login</Button>
+          <Input
+            type="password"
+            placeholder="Password"
+            name="pass"
+            value={pass}
+            onChange={handlePassChange}
+          />
+        </Control>
+      </Field>
+      <Field>
+        <Control>
+          <Button
+            onClick={() => {
+              setName('');
+              setPass('');
+              return props.login(name, pass);
+            }}
+          >
+            Login
+          </Button>
         </Control>
       </Field>
     </Fragment>
@@ -42,10 +68,10 @@ const LoginForm = props => {
 function UserPanel(props) {
   return (
     <Tile kind="child" as={Notification} color="warning">
-      <Title>Welcome {props.user}</Title>
+      <Title>Welcome {props.user.name}</Title>
       <Column.Group>
         <Column>
-          {props.user !== 'Guest' ? (
+          {props.user.name !== 'Guest' ? (
             <Button
               onClick={() => {
                 props.userLogout();
@@ -71,8 +97,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    userLogin: name => {
-      dispatch({ type: 'USER_LOGIN', name });
+    userLogin: (name, pass) => {
+      dispatch(loginUser(name, pass));
     },
     userLogout: () => {
       dispatch({ type: 'USER_LOGOUT' });
