@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Tile, Notification, Title, Content } from 'rbx';
 import {
   VictoryLine,
@@ -8,21 +8,14 @@ import {
   VictoryVoronoiContainer
 } from 'victory';
 import { connect } from 'react-redux';
+import { getMoods } from '../ducks/actions';
 
 function Graph(props) {
-  if (props.user.name !== 'Guest') {
-    // TODO: GET user data
-    return (
-      <Tile kind="parent">
-        <Tile kind="child" as={Notification} color="info">
-          <Title as="h2">
-            {props.visFilter === 'SHOW_MOOD' ? 'Mood' : 'Sleep'} Chart
-          </Title>
-          User Specific Graph
-        </Tile>
-      </Tile>
-    );
-  }
+  useEffect(() => {
+    props.getMoods(props.user.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.user.id]);
+
   return (
     <Tile kind="parent">
       <Tile kind="child" as={Notification} color="info">
@@ -119,10 +112,14 @@ function Graph(props) {
   );
 }
 
+const mapDispatchToProps = {
+  getMoods
+};
+
 const mapStateToProps = (state, ownProps) => {
   if (state.visFilter === 'SHOW_MOOD') {
     return {
-      data: state.mood.testData,
+      data: state.mood.moodData,
       visFilter: state.visFilter,
       user: state.auth
     };
@@ -134,4 +131,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(Graph);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Graph);

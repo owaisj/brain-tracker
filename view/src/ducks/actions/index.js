@@ -20,6 +20,25 @@ export const visibilityFilters = {
   SHOW_SLEEP: 'SHOW_SLEEP'
 };
 
+// Action Creator for getting mood data
+export const getMoods = id => {
+  console.log('getMoods Started');
+  console.log('Before Fetch');
+  return dispatch =>
+    fetch(`/api/mood/${id}`)
+      .then(res => res.json())
+      .then(data => {
+        const newData = data.map((item, index) => {
+          return {
+            day: item.createdAt,
+            mood: item.mood_value
+          };
+        });
+        console.log(newData);
+        dispatch({ type: 'GET_MOOD_DATA', newData });
+      });
+};
+
 export const loginUser = (username, password) => {
   return dispatch => {
     fetch('api/users/login', {

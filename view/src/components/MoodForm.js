@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { addMoodEntry, setVisitibilityFilter } from '../ducks/actions/';
+import {
+  addMoodEntry,
+  setVisitibilityFilter,
+  getMoods
+} from '../ducks/actions/';
 
 function MoodForm(props) {
   const [moodValue, setMoodValue] = useState(null);
@@ -30,48 +34,64 @@ function MoodForm(props) {
               timeCaption="Time"
             />
           </Column>
-          <Column>
-            <Dropdown>
-              <Dropdown.Trigger>
-                <Button>
-                  Mood Value: {moodValue ? moodValue : 'Pick a number'}
-                </Button>
-              </Dropdown.Trigger>
-              <Dropdown.Menu>
-                <Dropdown.Content>
-                  {Array(10)
-                    .fill(null)
-                    .map((item, index) => {
-                      return (
-                        <Dropdown.Item
-                          key={index}
-                          onClick={() => {
-                            setMoodValue(index + 1);
-                            console.log(moodValue);
-                          }}
-                        >
-                          {index + 1}
-                        </Dropdown.Item>
-                      );
-                    })}
-                </Dropdown.Content>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Column>
         </Column.Group>
         <Column.Group>
-          <Button
-            onClick={() => {
-              // These are in place of API calls
-              if (!moodValue) return console.log(`Enter a mood for ${date}`);
-              console.log(`Date: ${date} Mood Value: ${moodValue}`);
-              // Reset State
-              setDate(new Date());
-              setMoodValue(null);
-            }}
-          >
-            Submit
-          </Button>
+          <Dropdown>
+            <Dropdown.Trigger>
+              <Button>Mood: {moodValue ? moodValue : 'Pick a number'}</Button>
+            </Dropdown.Trigger>
+            <Dropdown.Menu>
+              <Dropdown.Content>
+                {Array(10)
+                  .fill(null)
+                  .map((item, index) => {
+                    return (
+                      <Dropdown.Item
+                        key={index}
+                        onClick={() => {
+                          setMoodValue(index + 1);
+                          console.log(moodValue);
+                        }}
+                      >
+                        {index + 1}
+                      </Dropdown.Item>
+                    );
+                  })}
+              </Dropdown.Content>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Column.Group>
+
+        <Column.Group>
+          <Column>
+            <Button
+              onClick={() => {
+                // These are in place of API calls
+                if (!moodValue) return console.log(`Enter a mood for ${date}`);
+                console.log(`Date: ${date} Mood Value: ${moodValue}`);
+                console.log(props.user.id);
+                fetch(`/api/mood/${props.user.id}`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                    mood_value: moodValue.toString()
+                  })
+                })
+                  .then(res => res.json())
+                  .then(data => {
+                    console.log(data);
+                    // Reset State
+                    setDate(new Date());
+                    setMoodValue(null);
+                    props.grabMoodData(props.user.id);
+                  });
+              }}
+            >
+              Submit
+            </Button>
+          </Column>
         </Column.Group>
       </Tile>
     );
@@ -113,7 +133,8 @@ function MoodForm(props) {
 const mapDispatchToProps = dispatch => ({
   // props.addEntry(date, value)
   addEntry: (d, v) => dispatch(addMoodEntry(d, v)),
-  setChartData: f => dispatch(setVisitibilityFilter(f))
+  setChartData: f => dispatch(setVisitibilityFilter(f)),
+  grabMoodData: v => dispatch(getMoods(v))
 });
 
 const mapStateToProps = state => ({

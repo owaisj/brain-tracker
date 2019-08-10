@@ -1,6 +1,6 @@
 // This is test data used in the graph component
 const initialState = {
-  testData: []
+  moodData: []
 };
 
 export default function moodReducer(state = initialState, action) {
@@ -8,8 +8,8 @@ export default function moodReducer(state = initialState, action) {
     // TODO: Change to identify this as dummy
     case 'ADD_MOOD_ENTRY':
       return {
-        testData: [
-          ...state.testData,
+        moodData: [
+          ...state.moodData,
           {
             day: action.date,
             mood: action.value
@@ -23,7 +23,10 @@ export default function moodReducer(state = initialState, action) {
       Once data has been posted, grab the whole table and added it to the state
       Note that this logic can be repeated for the sleep
     */
-
+    case 'GET_MOOD_DATA':
+      return { moodData: action.newData };
+    case 'CLEAR_MOOD_DATA':
+      return { moodData: [] };
     default:
       return state;
   }

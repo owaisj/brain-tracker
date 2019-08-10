@@ -102,6 +102,7 @@ const mapDispatchToProps = dispatch => {
     },
     userLogout: () => {
       dispatch({ type: 'USER_LOGOUT' });
+      dispatch({ type: 'CLEAR_MOOD_DATA' });
     }
   };
 };

@@ -4,9 +4,9 @@ const db = require('../../models');
 router
   .route('/:id')
   .get((req, res) => {
-    db.Mood.findAll({ where: { UserId: req.params.id } }).then(data =>
-      res.status(200).json(data)
-    );
+    db.Mood.findAll({
+      where: { UserId: req.params.id }
+    }).then(data => res.status(200).json(data));
   })
   .post((req, res) => {
     /* eslint-disable */

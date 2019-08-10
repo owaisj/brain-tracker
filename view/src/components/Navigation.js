@@ -2,10 +2,12 @@ import React from 'react';
 import { Tile, Title, Notification, Dropdown, Button } from 'rbx';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import UserPanel from './UserPanel';
 
 function Navigation(props) {
   return (
-    <Tile kind="parent" vertical>
+    <Tile kind="parent" vertical size={4}>
+      <UserPanel />
       <Tile kind="child" as={Notification} color="danger">
         <Title>Hello {props.user.name}</Title>
         <Dropdown hoverable>
