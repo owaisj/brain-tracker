@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Section, Container, Tile, Notification, Title, Content } from 'rbx';
 import Moment from 'moment';
-import Navigation from '../components/Navigation';
+import Navigation from '../components/NavPanel';
 
 export default function Main() {
   const [posts, setPosts] = useState([]);
@@ -29,14 +29,14 @@ export default function Main() {
     const date = Moment().format();
     if (loading) {
       output = (
-        <Tile as={Notification} kind="child" color="success">
+        <Tile as={Notification} kind="child" color="info">
           Loading
         </Tile>
       );
     } else {
       output = posts.map((p, i) => {
         return (
-          <Tile key={i} as={Notification} kind="child" color="success">
+          <Tile key={i} as={Notification} kind="child" color="info">
             <Title>{p.title}</Title>
             <Title subtitle>{date}</Title>
             <Content>{p.body}</Content>

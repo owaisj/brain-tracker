@@ -1,34 +1,57 @@
 import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
 import { Hero, Container, Title, Navbar } from 'rbx';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBrain } from '@fortawesome/free-solid-svg-icons';
 
-const CustomNav = () => {
-  const items = ['Your Blog', 'Your Tracker', 'About the App', 'Sign-up`'];
+import UserPanel from './UserPanel';
 
-  // TODO: Add an icon
+const CustomNav = props => {
+  const items = [
+    { name: 'Your Blog', url: '/' },
+    { name: 'Your Tracker', url: '/dashboard' }
+  ];
+
   return (
-    <Navbar fixed="top">
+    <Navbar>
       <Navbar.Brand>
-        <Link className="navbar-item is-hoverable nav-link" to="/">
-          <FontAwesomeIcon icon={faBrain} />
-        </Link>
+        <Navbar.Item as="div">
+          <Link className="nav-link" to="/">
+            <FontAwesomeIcon icon={faBrain} />
+          </Link>
+        </Navbar.Item>
+        <Navbar.Burger />
       </Navbar.Brand>
-
-      {items.map((item, i) => (
-        <Link key={i} className="navbar-item is-hoverable nav-link" to="/">
-          {item}
-        </Link>
-      ))}
+      <Navbar.Menu>
+        {items.map((item, i) => (
+          <Navbar.Item as="div" key={i}>
+            <Link className="nav-link" to={item.url}>
+              {item.name}
+            </Link>
+          </Navbar.Item>
+        ))}
+        <Navbar.Item as="div" dropdown hoverable>
+          <Navbar.Link arrowless>Log-in</Navbar.Link>
+          <Navbar.Dropdown as="div" className="nav-dropdown">
+            <Navbar.Item as="span">
+              You are logged in as {props.name}
+            </Navbar.Item>
+            <Navbar.Divider />
+            <Navbar.Item as="div">
+              <UserPanel />
+            </Navbar.Item>
+          </Navbar.Dropdown>
+        </Navbar.Item>
+      </Navbar.Menu>
     </Navbar>
   );
 };
 
-export default function Header() {
+function Header(props) {
   return (
     <Fragment>
-      <CustomNav />
+      <CustomNav name={props.user.name} />
       <Hero color="success">
         <Hero.Body>
           <Container>
@@ -43,3 +66,9 @@ export default function Header() {
     </Fragment>
   );
 }
+
+const mapStateToProps = state => ({
+  user: state.auth
+});
+
+export default connect(mapStateToProps)(Header);
