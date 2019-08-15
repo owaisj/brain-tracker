@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
-import CustomFooter from './components/Footer';
-import Main from './pages/Main';
+import Footer from './components/Footer';
+import Dashboard from './pages/Dashboard';
 import Blog from './pages/Blog';
 
 export default function App() {
@@ -12,9 +12,10 @@ export default function App() {
         <Header />
         <Switch>
           <Route exact path="/" component={Blog} />
-          <Route exact path="/dashboard" component={Main} />
+          <Route exact path="/dashboard" component={Dashboard} />
         </Switch>
-        <CustomFooter />
+        {/* NOTE: This is a custom footer, not the same as rbx Footer */}
+        <Footer />
       </Router>
     </Fragment>
   );
