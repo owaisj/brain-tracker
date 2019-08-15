@@ -12,7 +12,7 @@ import {
 import Moment from 'moment';
 
 export default function BlogForm(props) {
-  const timestamp = Moment().format();
+  const timestamp = Moment().format('h:mma dddd, MMMM Do YYYY');
   const [values, setValues] = useState({ title: '', body: '', timestamp });
 
   const handleSubmit = e => {
@@ -27,6 +27,7 @@ export default function BlogForm(props) {
     setValues({ ...values, [name]: value });
   };
 
+  // TODO: Disabled prop based on login status
   return (
     <Fragment>
       <Tile as={Notification} kind="child" color="info">

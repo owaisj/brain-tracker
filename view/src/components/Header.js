@@ -9,7 +9,8 @@ import UserPanel from './UserPanel';
 
 const CustomNav = props => {
   const items = [
-    { name: 'Your Blog', url: '/' },
+    { name: 'Your Journal', url: '/blog' },
+    { name: 'Your Data', url: '/data' },
     { name: 'Your Tracker', url: '/dashboard' }
   ];
 
