@@ -2,7 +2,7 @@ import React from 'react';
 import { Section, Container, Tile } from 'rbx';
 import BlogForm from '../components/BlogForm';
 import BlogPosts from '../components/BlogPosts';
-import Navigation from '../components/NavPanel';
+import Sidebar from '../components/Sidebar';
 
 export default function BlogPage() {
   return (
@@ -10,7 +10,10 @@ export default function BlogPage() {
       <Container>
         <Tile kind="ancestor">
           {/* Column A */}
-          <Navigation />
+          <Sidebar
+            title="Your Journal"
+            description="This is a page for you to enter your thoughts in journal form."
+          />
           {/* Column B */}
           <Tile kind="parent" size={8} vertical>
             <BlogForm />

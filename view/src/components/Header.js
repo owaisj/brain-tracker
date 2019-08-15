@@ -9,33 +9,30 @@ import UserPanel from './UserPanel';
 
 const CustomNav = props => {
   const items = [
-    { name: 'Your Journal', url: '/blog' },
-    { name: 'Your Data', url: '/data' },
-    { name: 'Your Tracker', url: '/dashboard' }
+    { name: 'Journal', url: '/blog' },
+    { name: 'Table', url: '/data' },
+    { name: 'Graph', url: '/dashboard' },
+    { name: 'Resources', url: '/' }
   ];
 
   return (
-    <Navbar>
+    <Navbar color="success">
       <Navbar.Brand>
-        <Navbar.Item as="div">
-          <Link className="nav-link" to="/">
-            <FontAwesomeIcon icon={faBrain} />
-          </Link>
+        <Navbar.Item as={Link} to="/" hoverable>
+          <FontAwesomeIcon icon={faBrain} />
         </Navbar.Item>
         <Navbar.Burger />
       </Navbar.Brand>
       <Navbar.Menu>
         {items.map((item, i) => (
-          <Navbar.Item as="div" key={i}>
-            <Link className="nav-link" to={item.url}>
-              {item.name}
-            </Link>
+          <Navbar.Item as={Link} key={i} to={item.url} hoverable>
+            {item.name}
           </Navbar.Item>
         ))}
         <Navbar.Item as="div" dropdown hoverable>
-          <Navbar.Link arrowless>Log-in</Navbar.Link>
+          <Navbar.Link>Log-in</Navbar.Link>
           <Navbar.Dropdown as="div" className="nav-dropdown">
-            <Navbar.Item as="span">
+            <Navbar.Item as="span" style={{ color: 'black' }}>
               You are logged in as {props.name}
             </Navbar.Item>
             <Navbar.Divider />

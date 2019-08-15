@@ -7,19 +7,21 @@ A full-stack web application that allows users to track their mood and sleep, as
 Front-End: ReactJS  
 Back-End: Node, Express, Postgres
 
-## Proposed Development Tools
+## Front-End Libraries
 
-Enzyme for React front-end snapshot testing while following the Airbnb style guides (ESLint)  
-Jest for the front and back-end
+The React application uses Bulma CSS with the rbx component library.
 
 ## Testing
 
-REST Testing with POSTMAN
+REST Testing with POSTMAN  
+Front-End Component Testing with Jest
 
 ## Problems in Development
 
 Sequelize Hooks and Seeding, and Passport JS implementation  
 When snapshot testing the front-end, there was an issue with dependencies. For example, the CSS and component library for Bulma, as well as React Router were installed in the root of the project with the back-end but were used in the front-end (view directory).
+
+Using third-party component libraries has been complicated. In particular the chart library, Victory by Formidable Labs has had a steep learning curve associated with it with a lot of trial and error.
 
 ## Demo User
 

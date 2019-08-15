@@ -12,7 +12,7 @@ import { getMoods } from '../ducks/actions';
 
 function Graph(props) {
   useEffect(() => {
-    props.getMoods(props.user.id);
+    if (props.user.name !== 'Guest') props.getMoods(props.user.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.user.id]);
 
@@ -25,14 +25,15 @@ function Graph(props) {
         <Content>
           {props.data.length ? (
             <VictoryChart
-              domainPadding={10}
+              domainPadding={20}
+              padding={{ top: 0, bottom: 50, left: 50, right: 50 }}
               containerComponent={<VictoryVoronoiContainer />}
             >
               <VictoryAxis
                 // X-Axis
                 label="Day"
                 tickValues={props.data.map((value, index) => index)}
-                tickFormat={props.data.map((value, index) => index)}
+                tickFormat={props.data.map((value, index) => index + 1)}
                 style={{
                   axis: {
                     stroke: '#ffffff'
@@ -70,7 +71,9 @@ function Graph(props) {
                 }}
               />
               <VictoryLine
-                interpolation="natural"
+                interpolation={
+                  props.visFilter === 'SHOW_MOOD' ? 'cardinal' : 'linear'
+                }
                 labelComponent={<VictoryTooltip />}
                 labels={props.data.map(value => {
                   const day = new Date(value.day);

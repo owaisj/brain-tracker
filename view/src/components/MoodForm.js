@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Tile, Title, Notification, Button, Column, Dropdown } from 'rbx';
 import { connect } from 'react-redux';
 import DatePicker from 'react-datepicker';
@@ -13,7 +13,6 @@ import {
 function MoodForm(props) {
   const [moodValue, setMoodValue] = useState(null);
   const [date, setDate] = useState(new Date());
-  console.log(props);
   if (props.user.name !== 'Guest') {
     // TODO: POST to User Table
     // TODO: Change Models for better datetime
@@ -106,8 +105,8 @@ function MoodForm(props) {
       .split('T')[0];
   const randomValue = () => Math.floor(Math.random() * 10) + 1;
   return (
-    <Tile kind="child" as={Notification} color="primary">
-      <Title>Mood Form</Title>
+    <Fragment>
+      <Title subtitle>Mood Form</Title>
       <Column.Group>
         <Column>
           <Button
@@ -126,7 +125,7 @@ function MoodForm(props) {
           </Button>
         </Column>
       </Column.Group>
-    </Tile>
+    </Fragment>
   );
 }
 

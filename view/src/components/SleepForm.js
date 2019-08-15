@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Tile, Title, Notification, Button, Column } from 'rbx';
 import { connect } from 'react-redux';
 import { addSleepEntry, setVisitibilityFilter } from '../ducks/actions';
@@ -21,8 +21,8 @@ function SleepForm(props) {
       </Tile>
     );
   return (
-    <Tile kind="child" as={Notification} color="primary">
-      <Title>Sleep Form</Title>{' '}
+    <Fragment>
+      <Title subtitle>Sleep Form</Title>
       <Column.Group>
         <Column>
           <Button
@@ -41,7 +41,7 @@ function SleepForm(props) {
           </Button>
         </Column>
       </Column.Group>
-    </Tile>
+    </Fragment>
   );
 }
 
