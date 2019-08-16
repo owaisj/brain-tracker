@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react';
-import { Tile, Title, Notification, Button, Column, Dropdown } from 'rbx';
+import { Title, Button, Column, Dropdown } from 'rbx';
 import { connect } from 'react-redux';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -14,16 +14,15 @@ function MoodForm(props) {
   const [moodValue, setMoodValue] = useState(null);
   const [date, setDate] = useState(new Date());
   if (props.user.name !== 'Guest') {
-    // TODO: POST to User Table
-    // TODO: Change Models for better datetime
     // TODO: excludeDates and excludeTimes
     return (
-      <Tile kind="child" as={Notification} color="primary">
-        <Title>Mood Form</Title>
+      <Fragment>
+        <Title subtitle>Mood Form</Title>
 
         <Column.Group>
           <Column>
             <DatePicker
+              className="input"
               selected={date}
               onChange={d => setDate(d)}
               showTimeSelect
@@ -33,36 +32,38 @@ function MoodForm(props) {
               timeCaption="Time"
             />
           </Column>
-        </Column.Group>
-        <Column.Group>
-          <Dropdown>
-            <Dropdown.Trigger>
-              <Button>Mood: {moodValue ? moodValue : 'Pick a number'}</Button>
-            </Dropdown.Trigger>
-            <Dropdown.Menu>
-              <Dropdown.Content>
-                {Array(10)
-                  .fill(null)
-                  .map((item, index) => {
-                    return (
-                      <Dropdown.Item
-                        key={index}
-                        onClick={() => {
-                          setMoodValue(index + 1);
-                          console.log(moodValue);
-                        }}
-                      >
-                        {index + 1}
-                      </Dropdown.Item>
-                    );
-                  })}
-              </Dropdown.Content>
-            </Dropdown.Menu>
-          </Dropdown>
+          {/* </Column.Group>
+        <Column.Group> */}
+          <Column>
+            <Dropdown>
+              <Dropdown.Trigger>
+                <Button>Mood: {moodValue ? moodValue : '???'}</Button>
+              </Dropdown.Trigger>
+              <Dropdown.Menu>
+                <Dropdown.Content>
+                  {Array(10)
+                    .fill(null)
+                    .map((item, index) => {
+                      return (
+                        <Dropdown.Item
+                          key={index}
+                          onClick={() => {
+                            setMoodValue(index + 1);
+                            console.log(moodValue);
+                          }}
+                        >
+                          {index + 1}
+                        </Dropdown.Item>
+                      );
+                    })}
+                </Dropdown.Content>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Column>
         </Column.Group>
 
-        <Column.Group>
-          <Column>
+        <Column.Group centered>
+          <Column narrow>
             <Button
               onClick={() => {
                 // These are in place of API calls
@@ -90,8 +91,16 @@ function MoodForm(props) {
               Submit
             </Button>
           </Column>
+          <Column narrow>
+            <Button
+              onClick={() => props.setChartData('SHOW_MOOD')}
+              disabled={props.visFilter === 'SHOW_MOOD'}
+            >
+              View Mood
+            </Button>
+          </Column>
         </Column.Group>
-      </Tile>
+      </Fragment>
     );
   }
 

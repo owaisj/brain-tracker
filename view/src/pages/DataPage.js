@@ -6,6 +6,7 @@ import Sidebar from '../components/Sidebar';
 import MoodForm from '../components/MoodForm';
 import SleepForm from '../components/SleepForm';
 
+// TODO: Use same hook from graph component
 const DataPage = props => {
   return (
     <Section>
@@ -44,7 +45,7 @@ const DataPage = props => {
 const mapStateToProps = (state, ownProps) => {
   return {
     mood: state.mood.moodData,
-    sleep: state.sleep.testData,
+    sleep: state.sleep.sleepData,
     user: state.auth,
     visFilter: state.visFilter
   };

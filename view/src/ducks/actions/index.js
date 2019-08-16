@@ -1,3 +1,5 @@
+import MZ from 'moment-timezone';
+
 export const addMoodEntry = (date, value) => ({
   type: 'ADD_MOOD_ENTRY',
   date,
@@ -27,13 +29,33 @@ export const getMoods = id => {
       .then(res => res.json())
       .then(data => {
         const newData = data.map((item, index) => {
-          // TODO: MomentJS to alter the day value
           return {
-            day: item.createdAt,
+            day: MZ(item.createdAt)
+              .tz('America/Chicago')
+              .format('dddd Do YYYY h:mma z'),
             mood: item.mood_value
           };
         });
         dispatch({ type: 'GET_MOOD_DATA', newData });
+      });
+};
+
+// Action Creater for getting sleep data
+export const getSleeps = id => {
+  return dispatch =>
+    fetch(`/api/sleep/${id}`)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        const newData = data.map((item, index) => {
+          return {
+            day: MZ(item.createdAt)
+              .tz('America/Chicago')
+              .format('dddd Do YYYY'),
+            hours: item.sleep_time
+          };
+        });
+        dispatch({ type: 'GET_SLEEP_DATA', newData });
       });
 };
 
@@ -56,6 +78,8 @@ export const loginUser = (username, password) => {
             .then(res => res.json())
             .then(data => {
               console.log(data);
+              // TODO: Grab User Data (GRAB_USER_DATA)
+              // Add an endpoint for all user data
               dispatch({
                 type: 'USER_LOGIN',
                 name: `${data.firstName} ${data.lastName}`,

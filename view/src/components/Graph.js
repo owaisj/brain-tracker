@@ -8,18 +8,24 @@ import {
   VictoryVoronoiContainer
 } from 'victory';
 import { connect } from 'react-redux';
-import { getMoods } from '../ducks/actions';
+import { getMoods, getSleeps } from '../ducks/actions';
 
 function Graph(props) {
   useEffect(() => {
-    if (props.user.name !== 'Guest') props.getMoods(props.user.id);
+    if (props.user.name !== 'Guest') {
+      if (props.visFilter === 'SHOW_MOOD') {
+        props.grabMoodData(props.user.id);
+      } else {
+        props.grabSleepData(props.user.id);
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.user.id]);
+  }, [props.user.id, props.visFilter]);
 
   return (
     <Tile kind="parent">
       <Tile kind="child" as={Notification} color="info">
-        <Title as="h2">
+        <Title size={2}>
           {props.visFilter === 'SHOW_MOOD' ? 'Mood' : 'Sleep'} Chart
         </Title>
         <Content>
@@ -75,20 +81,7 @@ function Graph(props) {
                   props.visFilter === 'SHOW_MOOD' ? 'cardinal' : 'linear'
                 }
                 labelComponent={<VictoryTooltip />}
-                labels={props.data.map(value => {
-                  const day = new Date(value.day);
-                  const week = [
-                    'Sun',
-                    'Mon',
-                    'Tue',
-                    'Wed',
-                    'Thu',
-                    'Fri',
-                    'Sat',
-                    'Sun'
-                  ];
-                  return `Entered on ${week[day.getDay()]}, ${value.day}`;
-                })}
+                labels={props.data.map(value => `Entered on ${value.day}`)}
                 data={
                   props.visFilter === 'SHOW_MOOD'
                     ? props.data.map(value => value.mood)
@@ -115,9 +108,10 @@ function Graph(props) {
   );
 }
 
-const mapDispatchToProps = {
-  getMoods
-};
+const mapDispatchToProps = dispatch => ({
+  grabMoodData: v => dispatch(getMoods(v)),
+  grabSleepData: v => dispatch(getSleeps(v))
+});
 
 const mapStateToProps = (state, ownProps) => {
   if (state.visFilter === 'SHOW_MOOD') {
@@ -128,7 +122,7 @@ const mapStateToProps = (state, ownProps) => {
     };
   }
   return {
-    data: state.sleep.testData,
+    data: state.sleep.sleepData,
     visFilter: state.visFilter,
     user: state.auth
   };
