@@ -18,7 +18,14 @@ const app = express()
 if (process.env.NODE_ENV === 'production')
   app.use(express.static('view/build'));
 
-/* eslint-disable no-console */
-db.sequelize.sync({}).then(() => {
-  app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
+db.sequelize.sync({ force: true }).then(() => {
+  db.User.create({
+    email: 'demouser@test.com',
+    firstName: 'Demo',
+    lastName: 'User',
+    password: 'password',
+    bio: 'I am a test user for the development of this application.'
+  }).then(() =>
+    app.listen(PORT, () => console.log(`http://localhost:${PORT}`))
+  );
 });

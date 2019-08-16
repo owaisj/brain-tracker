@@ -5,7 +5,14 @@ router
   .route('/:id')
   .get((req, res) => {
     db.Mood.findAll({
-      where: { UserId: req.params.id }
+      include: [
+        {
+          model: db.User,
+          where: {
+            id: req.params.id
+          }
+        }
+      ]
     }).then(data => res.status(200).json(data));
   })
   .post((req, res) => {

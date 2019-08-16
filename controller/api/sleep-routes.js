@@ -4,9 +4,16 @@ const db = require('../../models');
 router
   .route('/:id')
   .get((req, res) => {
-    db.Sleep.findAll({ where: { UserId: req.params.id } }).then(data =>
-      res.status(200).json(data)
-    );
+    db.Sleep.findAll({
+      include: [
+        {
+          model: db.User,
+          where: {
+            id: req.params.id
+          }
+        }
+      ]
+    }).then(data => res.status(200).json(data));
   })
   .post((req, res) => {
     /* eslint-disable */

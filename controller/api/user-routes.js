@@ -33,13 +33,10 @@ router.get('/data', function(req, res) {
     res.json({});
   } else {
     // This is where we'll grab user data
-    res.json({
-      email: req.user.email,
-      firstName: req.user.firstName,
-      lastName: req.user.lastName,
-      id: req.user.id,
-      bio: req.user.bio
-    });
+    db.User.findAll({
+      where: { id: req.user.id },
+      include: [db.Journal, db.Mood, db.Sleep]
+    }).then(authUser => res.json(authUser));
   }
 });
 
