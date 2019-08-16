@@ -23,7 +23,7 @@ module.exports = {
     use_env_variable: 'DATABASE_URL',
     username: 'root',
     password: null,
-    database: 'database_production',
+    database: 'mentalhealthdb_prod',
     host: '127.0.0.1',
     dialect: 'postgres',
     operatorsAliases: false
