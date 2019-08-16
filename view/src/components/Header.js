@@ -30,7 +30,9 @@ const CustomNav = props => {
           </Navbar.Item>
         ))}
         <Navbar.Item as="div" dropdown hoverable>
-          <Navbar.Link>Log-in</Navbar.Link>
+          <Navbar.Link>
+            {props.name === 'Guest' ? 'Log-in' : 'Manage'}
+          </Navbar.Link>
           <Navbar.Dropdown as="div" className="nav-dropdown">
             <Navbar.Item as="span" style={{ color: 'black' }}>
               You are logged in as {props.name}

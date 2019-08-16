@@ -7,7 +7,11 @@ module.exports = function(sequelize, DataTypes) {
         primaryKey: true,
         autoIncrement: true
       },
-      entry_body: {
+      post_title: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      post_body: {
         type: DataTypes.TEXT,
         allowNull: false
         // validate: null

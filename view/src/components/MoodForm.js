@@ -67,8 +67,7 @@ function MoodForm(props) {
               onClick={() => {
                 // These are in place of API calls
                 if (!moodValue) return console.log(`Enter a mood for ${date}`);
-                console.log(`Date: ${date} Mood Value: ${moodValue}`);
-                console.log(props.user.id);
+
                 fetch(`/api/mood/${props.user.id}`, {
                   method: 'POST',
                   headers: {

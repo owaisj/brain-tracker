@@ -22,19 +22,17 @@ export const visibilityFilters = {
 
 // Action Creator for getting mood data
 export const getMoods = id => {
-  console.log('getMoods Started');
-  console.log('Before Fetch');
   return dispatch =>
     fetch(`/api/mood/${id}`)
       .then(res => res.json())
       .then(data => {
         const newData = data.map((item, index) => {
+          // TODO: MomentJS to alter the day value
           return {
             day: item.createdAt,
             mood: item.mood_value
           };
         });
-        console.log(newData);
         dispatch({ type: 'GET_MOOD_DATA', newData });
       });
 };

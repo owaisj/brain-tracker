@@ -9,22 +9,37 @@ import {
   Input,
   Help
 } from 'rbx';
+import { connect } from 'react-redux';
 import Moment from 'moment';
+import { grabPosts } from '../ducks/actions/journal';
 
-export default function BlogForm(props) {
+function BlogForm(props) {
   const timestamp = Moment().format('h:mma dddd, MMMM Do YYYY');
   const [values, setValues] = useState({ title: '', body: '', timestamp });
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    console.log(values);
-    console.log('You clicked submit');
-    setValues({ title: '', body: '', timestamp });
-  };
 
   const handleInputChange = e => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (!props.user.id) return;
+    return fetch(`/api/journal/${props.user.id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        post_title: values.title,
+        post_body: values.body
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        setValues({ title: '', body: '', timestamp });
+        props.grabPosts(props.user.id);
+      });
   };
 
   // TODO: Disabled prop based on login status
@@ -44,6 +59,7 @@ export default function BlogForm(props) {
                     name="title"
                     onChange={handleInputChange}
                     value={values.title}
+                    disabled={!props.user.id}
                   />
                 </Control>
                 <Help>Timestamp: {timestamp}</Help>
@@ -61,6 +77,7 @@ export default function BlogForm(props) {
                     name="body"
                     onChange={handleInputChange}
                     value={values.body}
+                    disabled={!props.user.id}
                   />
                 </Control>
               </Field>
@@ -71,7 +88,11 @@ export default function BlogForm(props) {
             <Field.Label />
             <Field.Body>
               <Control>
-                <Button color="secondary" onClick={handleSubmit}>
+                <Button
+                  color="secondary"
+                  onClick={handleSubmit}
+                  disabled={!props.user.id}
+                >
                   Submit
                 </Button>
               </Control>
@@ -82,3 +103,16 @@ export default function BlogForm(props) {
     </Fragment>
   );
 }
+
+const mapStateToProps = state => ({
+  user: state.auth
+});
+
+const mapDispatchToProps = {
+  grabPosts
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BlogForm);

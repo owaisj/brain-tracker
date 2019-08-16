@@ -1,4 +1,3 @@
-// This is test data used in the graph component
 const initialState = {
   moodData: []
 };
@@ -6,6 +5,7 @@ const initialState = {
 export default function moodReducer(state = initialState, action) {
   switch (action.type) {
     // TODO: Change to identify this as dummy
+    // TODO: Remove .reverse() from other components and rearrange state mutation
     case 'ADD_MOOD_ENTRY':
       return {
         moodData: [
