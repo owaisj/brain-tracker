@@ -8,38 +8,27 @@ import {
   VictoryVoronoiContainer
 } from 'victory';
 import { connect } from 'react-redux';
+import { getMoods, getSleeps } from '../ducks/actions';
 
 function Graph(props) {
-  if (props.user.name !== 'Guest') {
-    // TODO: GET user data
-    return (
-      <Tile kind="parent">
-        <Tile kind="child" as={Notification} color="info">
-          <Title as="h2">
-            {props.visFilter === 'SHOW_MOOD' ? 'Mood' : 'Sleep'} Chart
-          </Title>
-          User Specific Graph
-        </Tile>
-      </Tile>
-    );
-  }
   return (
     <Tile kind="parent">
       <Tile kind="child" as={Notification} color="info">
-        <Title as="h2">
+        <Title size={2}>
           {props.visFilter === 'SHOW_MOOD' ? 'Mood' : 'Sleep'} Chart
         </Title>
         <Content>
           {props.data.length ? (
             <VictoryChart
-              domainPadding={10}
+              domainPadding={20}
+              padding={{ top: 0, bottom: 50, left: 50, right: 50 }}
               containerComponent={<VictoryVoronoiContainer />}
             >
               <VictoryAxis
                 // X-Axis
                 label="Day"
                 tickValues={props.data.map((value, index) => index)}
-                tickFormat={props.data.map((value, index) => index)}
+                tickFormat={props.data.map((value, index) => index + 1)}
                 style={{
                   axis: {
                     stroke: '#ffffff'
@@ -77,22 +66,11 @@ function Graph(props) {
                 }}
               />
               <VictoryLine
-                interpolation="natural"
+                interpolation={
+                  props.visFilter === 'SHOW_MOOD' ? 'cardinal' : 'linear'
+                }
                 labelComponent={<VictoryTooltip />}
-                labels={props.data.map(value => {
-                  const day = new Date(value.day);
-                  const week = [
-                    'Sun',
-                    'Mon',
-                    'Tue',
-                    'Wed',
-                    'Thu',
-                    'Fri',
-                    'Sat',
-                    'Sun'
-                  ];
-                  return `Entered on ${week[day.getDay()]}, ${value.day}`;
-                })}
+                labels={props.data.map(value => `Entered on ${value.day}`)}
                 data={
                   props.visFilter === 'SHOW_MOOD'
                     ? props.data.map(value => value.mood)
@@ -119,19 +97,27 @@ function Graph(props) {
   );
 }
 
+const mapDispatchToProps = dispatch => ({
+  grabMoodData: v => dispatch(getMoods(v)),
+  grabSleepData: v => dispatch(getSleeps(v))
+});
+
 const mapStateToProps = (state, ownProps) => {
   if (state.visFilter === 'SHOW_MOOD') {
     return {
-      data: state.mood.testData,
+      data: state.mood.moodData,
       visFilter: state.visFilter,
       user: state.auth
     };
   }
   return {
-    data: state.sleep.testData,
+    data: state.sleep.sleepData,
     visFilter: state.visFilter,
     user: state.auth
   };
 };
 
-export default connect(mapStateToProps)(Graph);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Graph);

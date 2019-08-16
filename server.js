@@ -13,13 +13,19 @@ const app = express()
   .use(session({ secret: 'Typhlosion', resave: true, saveUninitialized: true }))
   .use(passport.initialize())
   .use(passport.session())
-  .use(controller)
-  // Test-GET
-  .get('/', function(req, res) {
-    return res.send('Passport JS Testing');
-  });
+  .use(controller);
 
-/* eslint-disable no-console */
+if (process.env.NODE_ENV === 'production')
+  app.use(express.static('view/build'));
+
 db.sequelize.sync({ force: true }).then(() => {
-  app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
+  db.User.create({
+    email: 'demouser@test.com',
+    firstName: 'Demo',
+    lastName: 'User',
+    password: 'password',
+    bio: 'I am a test user for the development of this application.'
+  }).then(() =>
+    app.listen(PORT, () => console.log(`http://localhost:${PORT}`))
+  );
 });

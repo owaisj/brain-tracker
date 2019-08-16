@@ -1,6 +1,6 @@
 @charset 'utf-8';
 @import '~../../node_modules/bulma/bulma.sass';
-
+@import url('https://fonts.googleapis.com/css?family=Patrick+Hand|Gloria+Hallelujah&display=swap');
 // Sticky footer
 #root {
   display: flex;
@@ -15,5 +15,31 @@
   color: white;
   &:hover {
     color: grey;
+  }
+}
+
+.footer {
+  color: $warning-invert;
+  background-color: $warning;
+  padding: 24px;
+}
+
+.nav-dropdown {
+  min-width: 200px;
+}
+
+.box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 0.25em;
+}
+
+.journal {
+  .post-title {
+    font-family: 'Patrick Hand', cursive;
+  }
+  .post-body {
+    font-family: 'Gloria Hallelujah', cursive;
   }
 }

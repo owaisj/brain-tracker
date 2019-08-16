@@ -1,15 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
-import {
-  Tile,
-  Title,
-  Notification,
-  Button,
-  Column,
-  Field,
-  Control,
-  Input
-} from 'rbx';
+import { Button, Column, Field, Control, Input } from 'rbx';
 import { loginUser } from '../ducks/actions';
 
 const LoginForm = props => {
@@ -67,8 +58,7 @@ const LoginForm = props => {
 
 function UserPanel(props) {
   return (
-    <Tile kind="child" as={Notification} color="warning">
-      <Title>Welcome {props.user.name}</Title>
+    <Fragment>
       <Column.Group>
         <Column>
           {props.user.name !== 'Guest' ? (
@@ -84,7 +74,7 @@ function UserPanel(props) {
           )}
         </Column>
       </Column.Group>
-    </Tile>
+    </Fragment>
   );
 }
 
@@ -102,6 +92,8 @@ const mapDispatchToProps = dispatch => {
     },
     userLogout: () => {
       dispatch({ type: 'USER_LOGOUT' });
+      dispatch({ type: 'CLEAR_MOOD_DATA' });
+      dispatch({ type: 'CLEAR_SLEEP_DATA' });
     }
   };
 };
