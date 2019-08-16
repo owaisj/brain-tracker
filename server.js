@@ -13,13 +13,12 @@ const app = express()
   .use(session({ secret: 'Typhlosion', resave: true, saveUninitialized: true }))
   .use(passport.initialize())
   .use(passport.session())
-  .use(controller)
-  // Test-GET
-  .get('/', function(req, res) {
-    return res.send('Passport JS Testing');
-  });
+  .use(controller);
+
+if (process.env.NODE_ENV === 'production')
+  app.use(express.static('view/build'));
 
 /* eslint-disable no-console */
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync({}).then(() => {
   app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
 });

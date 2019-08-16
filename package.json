@@ -4,7 +4,14 @@
   "description": "A mental wellness tracking application.",
   "main": "server.js",
   "scripts": {
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'view/*'\" \"npm run client\"",
+    "client": "cd view && npm run start",
     "watch": "nodemon server.js --ignore view/",
+    "install": "cd view && npm install",
+    "build": "cd view && npm run build",
+    "heroku-postbuild": "npm run build",
     "test:back": "set NODE_ENV=test && jest ./test --config ./jest.config.js --forceExit",
     "test:front": "cd view && npm run test"
   },
@@ -26,6 +33,7 @@
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
+    "if-env": "^1.0.4",
     "moment": "^2.24.0",
     "node-sass": "^4.12.0",
     "passport": "^0.4.0",
@@ -40,6 +48,7 @@
     "victory": "^32.3.3"
   },
   "devDependencies": {
+    "concurrently": "^4.1.1",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "eslint": "^5.16.0",
