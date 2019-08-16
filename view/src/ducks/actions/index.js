@@ -78,12 +78,13 @@ export const loginUser = (username, password) => {
             .then(res => res.json())
             .then(data => {
               console.log(data);
+              const output = data[0];
               // TODO: Grab User Data (GRAB_USER_DATA)
               // Add an endpoint for all user data
               dispatch({
                 type: 'USER_LOGIN',
-                name: `${data.firstName} ${data.lastName}`,
-                id: data.id //Use this for mood & sleep data API calls (Joins)
+                name: `${output.firstName} ${output.lastName}`,
+                id: output.id //Use this for mood & sleep data API calls (Joins)
               });
             });
         } else {
