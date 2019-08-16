@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Tile, Notification, Title, Content } from 'rbx';
 import {
   VictoryLine,
@@ -11,17 +11,6 @@ import { connect } from 'react-redux';
 import { getMoods, getSleeps } from '../ducks/actions';
 
 function Graph(props) {
-  useEffect(() => {
-    if (props.user.name !== 'Guest') {
-      if (props.visFilter === 'SHOW_MOOD') {
-        props.grabMoodData(props.user.id);
-      } else {
-        props.grabSleepData(props.user.id);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.user.id, props.visFilter]);
-
   return (
     <Tile kind="parent">
       <Tile kind="child" as={Notification} color="info">

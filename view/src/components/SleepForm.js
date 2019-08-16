@@ -98,10 +98,10 @@ function SleepForm(props) {
           </Column>
           <Column narrow>
             <Button
-              onClick={() => props.setChartData('SHOW_SLEEP')}
-              disabled={props.visFilter === 'SHOW_SLEEP'}
+              onClick={() => props.setChartData('SHOW_MOOD')}
+              disabled={props.visFilter === 'SHOW_MOOD'}
             >
-              View Sleep
+              View Mood
             </Button>
           </Column>
         </Column.Group>
@@ -121,10 +121,10 @@ function SleepForm(props) {
         </Column>
         <Column>
           <Button
-            onClick={() => props.setChartData('SHOW_SLEEP')}
-            disabled={props.visFilter === 'SHOW_SLEEP'}
+            onClick={() => props.setChartData('SHOW_MOOD')}
+            disabled={props.visFilter === 'SHOW_MOOD'}
           >
-            View Sleep
+            View Mood
           </Button>
         </Column>
       </Column.Group>

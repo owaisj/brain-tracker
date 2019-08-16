@@ -49,7 +49,6 @@ function MoodForm(props) {
                           key={index}
                           onClick={() => {
                             setMoodValue(index + 1);
-                            console.log(moodValue);
                           }}
                         >
                           {index + 1}
@@ -93,10 +92,10 @@ function MoodForm(props) {
           </Column>
           <Column narrow>
             <Button
-              onClick={() => props.setChartData('SHOW_MOOD')}
-              disabled={props.visFilter === 'SHOW_MOOD'}
+              onClick={() => props.setChartData('SHOW_SLEEP')}
+              disabled={props.visFilter === 'SHOW_SLEEP'}
             >
-              View Mood
+              View Sleep
             </Button>
           </Column>
         </Column.Group>
@@ -126,10 +125,10 @@ function MoodForm(props) {
         </Column>
         <Column>
           <Button
-            onClick={() => props.setChartData('SHOW_MOOD')}
-            disabled={props.visFilter === 'SHOW_MOOD'}
+            onClick={() => props.setChartData('SHOW_SLEEP')}
+            disabled={props.visFilter === 'SHOW_SLEEP'}
           >
-            View Mood
+            View Sleep
           </Button>
         </Column>
       </Column.Group>

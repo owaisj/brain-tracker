@@ -16,25 +16,36 @@ const CustomNav = props => {
   ];
 
   return (
-    <Navbar color="success">
+    <Navbar>
       <Navbar.Brand>
-        <Navbar.Item as={Link} to="/" hoverable>
-          <FontAwesomeIcon icon={faBrain} />
+        <Navbar.Item tab as={Link} to="/" hoverable>
+          <FontAwesomeIcon icon={faBrain} style={{ color: 'black' }} />
         </Navbar.Item>
         <Navbar.Burger />
       </Navbar.Brand>
       <Navbar.Menu>
         {items.map((item, i) => (
-          <Navbar.Item as={Link} key={i} to={item.url} hoverable>
+          <Navbar.Item
+            tab
+            as={Link}
+            key={i}
+            to={item.url}
+            hoverable
+            style={
+              item.name === 'Resources'
+                ? { color: 'red', pointerEvents: 'none' }
+                : {}
+            }
+          >
             {item.name}
           </Navbar.Item>
         ))}
         <Navbar.Item as="div" dropdown hoverable>
-          <Navbar.Link>
+          <Navbar.Link arrowless>
             {props.name === 'Guest' ? 'Log-in' : 'Manage'}
           </Navbar.Link>
           <Navbar.Dropdown as="div" className="nav-dropdown">
-            <Navbar.Item as="span" style={{ color: 'black' }}>
+            <Navbar.Item as="span">
               You are logged in as {props.name}
             </Navbar.Item>
             <Navbar.Divider />

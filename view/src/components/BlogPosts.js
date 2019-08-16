@@ -1,9 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Tile, Notification, Title, Content } from 'rbx';
-import { connect } from 'react-redux';
+import { Tile, Notification, Title, Content, Help, Delete } from 'rbx';
 import { grabPosts } from '../ducks/actions/journal';
-import Moment from 'moment';
-import MZ from 'moment-timezone';
+import { connect } from 'react-redux';
 
 function BlogPosts(props) {
   const [posts, setPosts] = useState([]);
@@ -22,13 +20,10 @@ function BlogPosts(props) {
           console.log(err);
           setLoading(false);
         });
-    } else {
-      props.grabPosts(props.user.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.user.id]);
+  }, []);
 
-  const timestamp = Moment().format('h:mma dddd, MMMM Do YYYY');
   if (loading) {
     return (
       <Fragment>
@@ -42,10 +37,6 @@ function BlogPosts(props) {
     <Fragment>
       {props.journal.length && props.user.id
         ? props.journal.map((p, i) => {
-            // This is from the database!
-            const parsedTimestamp = MZ(p.timestamp)
-              .tz('America/Chicago')
-              .format('dddd Do YYYY h:mma z');
             return (
               <Tile
                 className="journal"
@@ -56,9 +47,19 @@ function BlogPosts(props) {
               >
                 <Title className="post-title">{p.title}</Title>
                 <Title subtitle size={6}>
-                  {parsedTimestamp}
+                  {p.timestamp}
                 </Title>
                 <Content className="post-body">{p.body}</Content>
+                <Help>
+                  <Delete
+                    onClick={() => {
+                      fetch(`/api/journal/del/${p.id}`, { method: 'DELETE' })
+                        .then(res => res.json())
+                        .then(data => props.grabPosts(props.user.id));
+                    }}
+                  />
+                  <span style={{ margin: '1em' }}>Delete Post</span>
+                </Help>
               </Tile>
             );
           })
@@ -73,7 +74,7 @@ function BlogPosts(props) {
               >
                 <Title className="post-title">{p.title}</Title>
                 <Title subtitle size={6}>
-                  {timestamp}
+                  {p.timestamp}
                 </Title>
                 <Content className="post-body">{p.body}</Content>
               </Tile>
@@ -82,9 +83,11 @@ function BlogPosts(props) {
     </Fragment>
   );
 }
+
 const mapDispatchToProps = {
   grabPosts
 };
+
 const mapStateToProps = (state, ownProps) => {
   return {
     journal: state.blog,

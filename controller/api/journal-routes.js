@@ -34,4 +34,14 @@ router
       });
   });
 
+// NOTE: This is the post id
+router.route('/del/:id').delete((req, res) => {
+  db.Journal.destroy({ where: { id: req.params.id } })
+    .then(post => res.status(200).json({ message: 'Deleted Post' }))
+    .catch(err => {
+      console.log(err);
+      res.status(422).json({ message: 'Unable to delete post' });
+    });
+});
+
 module.exports = router;

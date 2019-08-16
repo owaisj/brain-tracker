@@ -77,14 +77,43 @@ export const loginUser = (username, password) => {
           fetch('/api/users/data')
             .then(res => res.json())
             .then(data => {
-              console.log(data);
               const output = data[0];
-              // TODO: Grab User Data (GRAB_USER_DATA)
-              // Add an endpoint for all user data
               dispatch({
                 type: 'USER_LOGIN',
                 name: `${output.firstName} ${output.lastName}`,
-                id: output.id //Use this for mood & sleep data API calls (Joins)
+                id: output.id
+              });
+
+              // NOTE: These are essentially repeated versions of
+              // async action generators used to grab user data
+              dispatch({
+                type: 'GET_MOOD_DATA',
+                newData: output.Moods.map(item => ({
+                  day: MZ(item.createdAt)
+                    .tz('America/Chicago')
+                    .format('dddd Do YYYY'),
+                  mood: item.mood_value
+                }))
+              });
+              dispatch({
+                type: 'GET_SLEEP_DATA',
+                newData: output.Sleep.map(item => ({
+                  day: MZ(item.createdAt)
+                    .tz('America/Chicago')
+                    .format('dddd Do YYYY'),
+                  hours: item.sleep_time
+                }))
+              });
+              dispatch({
+                type: 'GET_JOURNAL_POSTS',
+                allPosts: output.Journals.reverse().map(item => ({
+                  id: item.id,
+                  title: item.post_title,
+                  body: item.post_body,
+                  timestamp: MZ(item.createdAt)
+                    .tz('America/Chicago')
+                    .format('dddd Do YYYY [at] h:mm A')
+                }))
               });
             });
         } else {

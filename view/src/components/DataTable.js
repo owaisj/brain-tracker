@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Column, Title, Table, Box, Content } from 'rbx';
 
 export default function TableComponent(props) {
-  // TODO: Divide props.data in to chunks
+  // TODO: Divide props.data in to chunks for pagination
   return (
     <Fragment>
       <Column.Group centered>

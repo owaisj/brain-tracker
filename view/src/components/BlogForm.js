@@ -42,7 +42,6 @@ function BlogForm(props) {
       });
   };
 
-  // TODO: Disabled prop based on login status
   return (
     <Fragment>
       <Tile as={Notification} kind="child" color="info">
