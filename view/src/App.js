@@ -15,7 +15,7 @@ export default function App() {
         <Header />
         <Switch>
           <Route exact path="/" component={Main} />
-          <Route exact path="/blog" component={Blog} />
+          <Route exact path="/journal" component={Blog} />
           <Route exact path="/data" component={Data} />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route component={CatchAll} />

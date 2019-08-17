@@ -21,8 +21,8 @@ if (process.env.NODE_ENV === 'production')
 db.sequelize.sync({ force: true }).then(() => {
   db.User.create({
     email: 'demouser@test.com',
-    firstName: 'Demo',
-    lastName: 'User',
+    firstName: 'Owais',
+    lastName: 'J',
     password: 'password',
     bio: 'I am a test user for the development of this application.'
   }).then(() =>

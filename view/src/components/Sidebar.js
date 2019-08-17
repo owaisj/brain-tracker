@@ -5,7 +5,12 @@ import { connect } from 'react-redux';
 function Sidebar(props) {
   return (
     <Tile kind="parent" vertical size={4}>
-      <Tile kind="child" as={Notification} color="primary">
+      <Tile
+        kind="child"
+        as={Notification}
+        color="primary"
+        style={{ border: '2px solid white' }}
+      >
         <Title>{props.title}</Title>
         <Content>{props.description}</Content>
         {props.children}

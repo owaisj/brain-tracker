@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Tile, Notification, Title, Content, Help, Delete } from 'rbx';
 import { grabPosts } from '../ducks/actions/journal';
 import { connect } from 'react-redux';
+import MZ from 'moment-timezone';
 
 function BlogPosts(props) {
   const [posts, setPosts] = useState([]);
@@ -22,7 +23,7 @@ function BlogPosts(props) {
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [props.user.id]);
 
   if (loading) {
     return (
@@ -74,7 +75,9 @@ function BlogPosts(props) {
               >
                 <Title className="post-title">{p.title}</Title>
                 <Title subtitle size={6}>
-                  {p.timestamp}
+                  {MZ()
+                    .tz('America/Chicago')
+                    .format('dddd Do YYYY [at] h:mm A')}
                 </Title>
                 <Content className="post-body">{p.body}</Content>
               </Tile>
