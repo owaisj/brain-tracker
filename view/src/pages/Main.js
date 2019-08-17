@@ -19,7 +19,12 @@ export default function(props) {
             }
           />
           <Tile kind="parent" vertical size={8}>
-            <Tile as={Notification} kind="child" color="info">
+            <Tile
+              as={Notification}
+              kind="child"
+              color="info"
+              style={{ border: '2px solid white' }}
+            >
               <Title>Features</Title>
               <Content />
               <Title subtitle size={6}>

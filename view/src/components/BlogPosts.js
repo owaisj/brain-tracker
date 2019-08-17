@@ -23,7 +23,7 @@ function BlogPosts(props) {
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [props.user.id]);
 
   if (loading) {
     return (

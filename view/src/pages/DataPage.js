@@ -23,7 +23,12 @@ const DataPage = props => {
           {/* Column B */}
           <Tile kind="parent" vertical size={8}>
             {/* Row 1 */}
-            <Tile kind="child" as={Notification} color="info">
+            <Tile
+              kind="child"
+              as={Notification}
+              color="info"
+              style={{ border: '2px solid white' }}
+            >
               <Title>
                 {props.user.name}'s{' '}
                 {props.visFilter === 'SHOW_MOOD' ? 'Mood' : 'Sleep'} Data

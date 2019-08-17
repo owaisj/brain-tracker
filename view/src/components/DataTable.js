@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
-import { Column, Title, Table, Box, Content } from 'rbx';
+import { Column, Title, Table, Box, Content, Tag } from 'rbx';
+import { Link } from 'react-router-dom';
 
 export default function TableComponent(props) {
   // TODO: Divide props.data in to chunks for pagination
@@ -7,7 +8,14 @@ export default function TableComponent(props) {
     <Fragment>
       <Column.Group centered>
         <Column size={4} offset={1}>
-          <Title subtitle>Link to {props.type} Graph</Title>
+          <Title>
+            <Tag.Group gapless>
+              <Tag as={Link} to="/dashboard" color="white">
+                <span style={{ color: 'black' }}>View Graph</span>
+              </Tag>
+              <Tag color="success">{props.type}</Tag>
+            </Tag.Group>
+          </Title>
           <Content>
             In this section you can add some data analysis or links or tips.
           </Content>

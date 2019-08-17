@@ -13,7 +13,12 @@ import { getMoods, getSleeps } from '../ducks/actions';
 function Graph(props) {
   return (
     <Tile kind="parent">
-      <Tile kind="child" as={Notification} color="info">
+      <Tile
+        kind="child"
+        as={Notification}
+        color="info"
+        style={{ border: '2px solid white' }}
+      >
         <Title size={2}>
           {props.visFilter === 'SHOW_MOOD' ? 'Mood' : 'Sleep'} Chart
         </Title>

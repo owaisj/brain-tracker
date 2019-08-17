@@ -44,7 +44,12 @@ function BlogForm(props) {
 
   return (
     <Fragment>
-      <Tile as={Notification} kind="child" color="info">
+      <Tile
+        as={Notification}
+        kind="child"
+        color="info"
+        style={{ border: '2px solid white' }}
+      >
         <form>
           {/* Title */}
           <Field horizontal>
