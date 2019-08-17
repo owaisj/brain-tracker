@@ -9,6 +9,7 @@
 }
 .section {
   flex-grow: 1;
+  background-image: linear-gradient(to bottom, #159ab1, turquoise, $warning);
 }
 
 .title-link {
