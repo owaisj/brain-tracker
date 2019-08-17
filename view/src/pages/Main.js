@@ -8,13 +8,37 @@ export default function(props) {
       <Container>
         <Tile kind="ancestor">
           <Sidebar
-            title="Home Page"
-            description="Information about the application"
+            title="Welcome"
+            description={
+              <p>
+                This a single-page web application to track your brain and
+                mental wellness.
+              </p>
+            }
           />
           <Tile kind="parent" vertical size={8}>
             <Tile as={Notification} kind="child" color="info">
-              <Title>Column B Title</Title>
-              <Content>Column B Content</Content>
+              <Title>Features</Title>
+              <Content />
+              <Title subtitle size={6}>
+                Journal:{' '}
+                <Content as="span" size="small">
+                  Record your thoughts and feelings.
+                </Content>
+              </Title>
+
+              <Title subtitle size={6}>
+                Mood:{' '}
+                <Content as="span" size="small">
+                  Grade how you're feeling from 1-10.
+                </Content>
+              </Title>
+              <Title subtitle size={6}>
+                Sleep:{' '}
+                <Content as="span" size="small">
+                  Log how many hours of sleep you've gotten.
+                </Content>
+              </Title>
             </Tile>
           </Tile>
         </Tile>

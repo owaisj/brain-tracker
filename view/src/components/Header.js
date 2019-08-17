@@ -6,8 +6,6 @@ import { withRouter } from 'react-router-dom';
 import CustomNav from './Navigation';
 
 const Header = props => {
-  console.log('Location Path Name: ' + props.location.pathname.substring(1));
-
   const title = (function(path) {
     if (path === '') return 'Home';
     return path.charAt(0).toUpperCase() + path.substring(1);
@@ -19,7 +17,7 @@ const Header = props => {
         <title>Brain Tracker: {title}</title>
       </Helmet>
       <CustomNav />
-      <Hero color="success">
+      <Hero style={{ backgroundColor: '#159ab1' }}>
         <Hero.Body>
           <Container>
             <Title>

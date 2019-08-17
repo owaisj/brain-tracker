@@ -11,7 +11,7 @@ const CustomNav = props => {
     { name: 'Journal', url: '/journal' },
     { name: 'Table', url: '/data' },
     { name: 'Graph', url: '/dashboard' },
-    { name: 'Resources', url: '/' }
+    { name: 'Coming Soon!', url: '/' }
   ];
 
   return (
@@ -31,7 +31,7 @@ const CustomNav = props => {
             to={item.url}
             hoverable
             style={
-              item.name === 'Resources'
+              item.name === 'Coming Soon!'
                 ? { color: 'red', pointerEvents: 'none' }
                 : {}
             }
