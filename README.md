@@ -1,19 +1,31 @@
-# Mental Health Tracker
+# Brain Tracker
 
 A full-stack web application that allows users to track their mood and sleep, as well as keep track of resources to help on their journies to better health and wellness.
 
+## Try It Out!
+
+### Demo User
+
+```
+Email: demouser@test.com
+Password: password
+```
+
 ## Technology Stack
 
-Front-End: ReactJS  
-Back-End: Node, Express, Postgres
+Front-End: ReactJS with Redux
+Back-End: Node/Express, Postgres
 
 ## Front-End Libraries
 
-The React application uses Bulma CSS with the rbx component library.
+The React application uses Bulma CSS with the rbx component library.  
+Data Visualization is done with Victory by Formidable Labs.  
+The calendar is made with React-Datepicker.  
+Moment-Timezone is utilized to parse Postgres Timestamps.
 
 ## Testing
 
-REST consumption was tested with POSTMAN.
+REST consumption was tested with POSTMAN prior to setting up the front-end.
 
 ## Problems in Development
 
@@ -24,9 +36,7 @@ Using third-party component libraries has been complicated. In particular the ch
 
 Building the heroku app brought up issues with the dependency tree. Eslint and Jest were installed in the root directory and managed with the root package.json but were also a part of the `create-react-app`'s dependencies. In order to proceed with deployment, they had to be uninstalled.
 
-## Demo User
+## Future Work
 
-```
-Email: demouser@test.com
-Password: password
-```
+Testing with Jest for the Front-End.  
+Alternative to "bruteforcing" REST API with Mocha.
