@@ -2,7 +2,7 @@ import React from 'react';
 import { Section, Container, Tile, Title, Content, Notification } from 'rbx';
 import Sidebar from '../components/Sidebar';
 
-export default function() {
+export default function(props) {
   return (
     <Section>
       <Container>

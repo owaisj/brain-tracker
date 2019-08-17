@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Footer, Tile, Title, Content, Button } from 'rbx';
+import { Footer, Tile, Title, Content, Button, Tag } from 'rbx';
 
 const ContentBlock = props => (
   <Tile kind="parent" vertical>
@@ -51,7 +51,33 @@ export default function() {
           You can record your thoughts, the hours you've slept, and a grade of
           your mood.
         </ContentBlock>
-        <ContentBlock title="Credits">Github Link, Portfolio Link</ContentBlock>
+        <ContentBlock title="Credits">
+          <Tag.Group gapless>
+            <Tag
+              color="black"
+              as="a"
+              href="https://github.com/owaisj/brain-tracker"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Code
+            </Tag>
+            <Tag color="white">Github</Tag>
+          </Tag.Group>
+          {'  '}
+          <Tag.Group gapless>
+            <Tag
+              color="black"
+              as="a"
+              href="https://owais.io"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Portfolio
+            </Tag>
+            <Tag color="info">Owais.io</Tag>
+          </Tag.Group>
+        </ContentBlock>
         {/* Crisis Line */}
         <Tile kind="parent" vertical>
           <Tile kind="child">
@@ -83,6 +109,7 @@ export default function() {
           </Tile>
         </Tile>
       </Tile>
+      <Content size="small">&copy; 2019 Owais Jamil</Content>
     </Footer>
   );
 }
