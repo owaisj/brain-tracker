@@ -3,6 +3,7 @@ const session = require('express-session');
 const db = require('./models');
 const passport = require('./config/passport');
 const controller = require('./controller');
+const path = require('path');
 
 const PORT = process.env.PORT || 3001;
 const app = express()
@@ -14,9 +15,15 @@ const app = express()
   .use(passport.initialize())
   .use(passport.session())
   .use(controller);
+       
 
-if (process.env.NODE_ENV === 'production')
-  app.use(express.static('view/build'));
+if (process.env.NODE_ENV === "production") {
+  const root = require("path").join(__dirname, "view", "build");
+  app.use(express.static(root));
+  app.get("*", (req, res) => {
+    res.sendFile("index.html", { root });
+  });
+}
 
 db.sequelize.sync({ force: true }).then(() => {
   db.User.create({
